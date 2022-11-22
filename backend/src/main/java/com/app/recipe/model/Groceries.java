@@ -1,4 +1,4 @@
-package com.example.recipe.model;
+package com.app.recipe.model;
 
 
 import javax.persistence.Entity;

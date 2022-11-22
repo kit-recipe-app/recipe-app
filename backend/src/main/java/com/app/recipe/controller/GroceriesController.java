@@ -1,8 +1,8 @@
-package com.example.recipe.controller;
+package com.app.recipe.controller;
 
 
-import com.example.recipe.model.Groceries;
-import com.example.recipe.repository.GroceriesRepository;
+import com.app.recipe.model.Groceries;
+import com.app.recipe.repository.GroceriesRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +23,8 @@ public class GroceriesController {
 
     @GetMapping
     public ResponseEntity<List<Groceries>> getAllGroceries() {
+        var testGrocery = new Groceries(3L, "Avocado", "Avocados sind toll");
+        this.groceriesRepository.save(testGrocery);
         return ResponseEntity.ok(this.groceriesRepository.findAll());
     }
 
