@@ -18,7 +18,7 @@ public class BaseController {
         return ResponseEntity.ok("Hello World");
     }
 
-    @GetMapping("/einkaufsliste")
+    @GetMapping("/shopping")
     public ResponseEntity<List<String>> answerPaul() {
         List<String> shoppingList = List.of("Tomaten", "Gurke", "Bier");
         return ResponseEntity.ok(shoppingList);
