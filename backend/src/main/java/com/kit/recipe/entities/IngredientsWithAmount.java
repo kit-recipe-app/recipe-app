@@ -1,9 +1,18 @@
 package com.kit.recipe.entities;
 
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@RequiredArgsConstructor
+@ToString
 public class IngredientsWithAmount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,19 +27,5 @@ public class IngredientsWithAmount {
     @OneToOne(targetEntity = Ingredient.class, cascade = CascadeType.ALL)
     private Ingredient ingredient;
 
-    public Ingredient getIngredient() {
-        return ingredient;
-    }
 
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

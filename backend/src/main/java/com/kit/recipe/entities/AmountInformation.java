@@ -20,6 +20,11 @@ public class AmountInformation {
     private String unit;
     private double amount;
 
+    public AmountInformation(double amount, String unit) {
+        this.amount = amount;
+        this.unit = unit;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
