@@ -46,6 +46,9 @@ public class RecipeController {
 
     @PostMapping("/ingredients")
     public ResponseEntity<Ingredient> addIngredient(@RequestBody IngredientDTO ingredient) {
+        if (ingredient.getName() == null || ingredient.getName().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
         Ingredient newIngredient = new Ingredient();
         newIngredient.setName(ingredient.getName());
         Optional<Ingredient> found =  ingredientRepository.findByNameContainsIgnoreCase(
