@@ -1,5 +1,5 @@
 services:
-  database:
+  db:
     image: postgres
     ports:
       - "5432:5432"
@@ -9,10 +9,19 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: recipes
 
+    networks:
+      - recipes-network
+
   adminer:
     image: adminer
     restart: always
     depends_on:
-      - database
+      - db
     ports:
       - 8080:8080
+
+    networks:
+        - recipes-network
+networks:
+  recipes-network:
+    driver: bridge

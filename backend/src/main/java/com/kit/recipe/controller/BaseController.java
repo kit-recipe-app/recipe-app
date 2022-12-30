@@ -22,7 +22,8 @@ public class BaseController {
     public ResponseEntity<List<String>> answerPaul() {
         List<String> shoppingList = List.of("Tomaten", "Gurke", "Bier");
         return ResponseEntity.ok(shoppingList);
-
     }
+
+
 
 }
