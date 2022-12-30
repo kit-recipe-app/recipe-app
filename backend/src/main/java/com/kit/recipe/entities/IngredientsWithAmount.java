@@ -8,15 +8,17 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Entity
+
 @Getter
 @Setter
 @RequiredArgsConstructor
 @ToString
+@Table(name = "ingredients_with_amount")
+@Entity
 public class IngredientsWithAmount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ingredients_with_amount", nullable = false)
+    @Column(name = "ingredients_with_amount_id", nullable = false)
     private Long id;
 
 

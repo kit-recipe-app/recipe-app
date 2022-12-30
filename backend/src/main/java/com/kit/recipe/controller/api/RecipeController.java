@@ -9,9 +9,11 @@ import com.kit.recipe.entities.AmountInformation;
 import com.kit.recipe.entities.Ingredient;
 import com.kit.recipe.entities.IngredientsWithAmount;
 import com.kit.recipe.entities.Recipe;
+import com.kit.recipe.entities.units.Unit;
 import com.kit.recipe.repository.IngredientRepository;
 import com.kit.recipe.repository.IngredientWithAmountRepository;
 import com.kit.recipe.repository.RecipeRepository;
+import com.kit.recipe.repository.UnitRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,12 +31,13 @@ public class RecipeController {
 
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
-
+    private final UnitRepository unitRepository;
     private final IngredientWithAmountRepository ingredientWithAmountRepository;
 
-    public RecipeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository,  IngredientWithAmountRepository ingredientWithAmountRepository) {
+    public RecipeController(IngredientRepository ingredientRepository, RecipeRepository recipeRepository, UnitRepository unitRepository, IngredientWithAmountRepository ingredientWithAmountRepository) {
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
+        this.unitRepository = unitRepository;
         this.ingredientWithAmountRepository = ingredientWithAmountRepository;
     }
 
@@ -78,6 +81,9 @@ public class RecipeController {
     }
 
 
+
+
+
     @PostMapping("/recipes/{recipeId}/ingredients/{ingredientId}")
     public ResponseEntity<IngredientsWithAmount> addIngredientToRecipe(@PathVariable String recipeId, @RequestBody AmountInformationDTO amount, @PathVariable String ingredientId) {
         Optional<Recipe> recipe = recipeRepository.findById(Long.parseLong(recipeId));
@@ -89,8 +95,14 @@ public class RecipeController {
         if (found.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        Optional<Unit> unit = unitRepository.findByName(amount.getUnit());
+
+        if (unit.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
         IngredientsWithAmount ingredientsWithAmount = new IngredientsWithAmount();
-        ingredientsWithAmount.setAmountInformation(new AmountInformation(amount.getAmount(), amount.getUnit()));
+        ingredientsWithAmount.setAmountInformation(new AmountInformation(amount.getAmount(), unit.get()));
         ingredientsWithAmount.setIngredient(found.get());
         recipe.get().getIngredients().add(ingredientsWithAmount);
 

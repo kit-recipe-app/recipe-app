@@ -1,5 +1,6 @@
 package com.kit.recipe.entities;
 
+import com.kit.recipe.entities.units.Unit;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -11,16 +12,19 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Table(name = "amount_information")
 @Entity
 public class AmountInformation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "amount_id", nullable = false)
     private Long id;
-    private String unit;
+    @OneToOne
+    @JoinColumn(name = "unit_id")
+    private Unit unit;
     private double amount;
 
-    public AmountInformation(double amount, String unit) {
+    public AmountInformation(double amount, Unit unit) {
         this.amount = amount;
         this.unit = unit;
     }
